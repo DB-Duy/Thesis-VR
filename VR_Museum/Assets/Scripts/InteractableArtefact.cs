@@ -8,6 +8,12 @@ public class InteractableArtefact : MonoBehaviour
 {
     [SerializeField]
     private XRGrabInteractable interactable;
+    private Vector3 originalPosition,
+        originalRotation,
+        originalScale;
+
+    [SerializeField]
+    private GameObject description;
 
     private void OnValidate()
     {
@@ -16,41 +22,34 @@ public class InteractableArtefact : MonoBehaviour
 
     private void Start()
     {
+        StoreInformation();
         AddListeners();
     }
 
-    private void AddListeners()
+    private void StoreInformation()
     {
-        interactable.selectEntered.AddListener(OnPickUp);
-        interactable.selectExited.AddListener(OnDrop);
+        originalPosition = interactable.transform.position;
+        originalRotation = interactable.transform.rotation.eulerAngles;
+        originalScale = interactable.transform.localScale;
     }
 
-    public int handsActive = 0;
-
-    public void OnPickUp(SelectEnterEventArgs args)
+    public void ResetObjectTransform()
     {
-        handsActive++;
-        print(handsActive);
-    }
-
-    public void OnDrop(SelectExitEventArgs args)
-    {
-        handsActive--;
-    }
-
-    private void Update()
-    {
-        if (handsActive == 2)
+        if (interactable.isSelected)
         {
-            ScaleObject();
+            return;
         }
+        interactable.transform.SetPositionAndRotation(
+            originalPosition,
+            Quaternion.Euler(originalRotation)
+        );
+        interactable.transform.localScale = originalScale;
     }
 
-    private void ScaleObject()
+    public void ToggleDescription()
     {
-        transform.localScale *= Vector3.Distance(
-            VRPlayer.player.handLeft.transform.position,
-            VRPlayer.player.handRight.transform.position
-        );
+        description.SetActive(!description.activeSelf);
     }
+
+    private void AddListeners() { }
 }
