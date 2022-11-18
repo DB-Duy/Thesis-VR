@@ -2,54 +2,62 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Transformers;
+
+public struct OriginalTransform
+{
+    public Vector3 originalPosition;
+    public Vector3 originalScale;
+    public Vector3 originalRotation;
+}
 
 public class InteractableArtefact : MonoBehaviour
 {
     [SerializeField]
-    private XRGrabInteractable interactable;
-    private Vector3 originalPosition,
-        originalRotation,
-        originalScale;
+    private XRGrabInteractable _interactable;
+    public OriginalTransform OriginalTransform { get; private set; }
+    private float _initialDistance = 0;
 
     [SerializeField]
-    private GameObject description;
+    private GameObject _description;
 
     private void OnValidate()
     {
-        interactable = GetComponent<XRGrabInteractable>();
+        _interactable = GetComponent<XRGrabInteractable>();
     }
 
     private void Start()
     {
         StoreInformation();
-        AddListeners();
     }
 
     private void StoreInformation()
     {
-        originalPosition = interactable.transform.position;
-        originalRotation = interactable.transform.rotation.eulerAngles;
-        originalScale = interactable.transform.localScale;
+        OriginalTransform = new OriginalTransform
+        {
+            originalPosition = transform.position,
+            originalScale = transform.localScale,
+            originalRotation = transform.rotation.eulerAngles
+        };
     }
 
     public void ResetObjectTransform()
     {
-        if (interactable.isSelected)
+        if (_interactable.isSelected)
         {
             return;
         }
-        interactable.transform.SetPositionAndRotation(
-            originalPosition,
-            Quaternion.Euler(originalRotation)
+        _interactable.transform.SetPositionAndRotation(
+            OriginalTransform.originalPosition,
+            Quaternion.Euler(OriginalTransform.originalRotation)
         );
-        interactable.transform.localScale = originalScale;
+        _interactable.transform.localScale = OriginalTransform.originalScale;
     }
 
     public void ToggleDescription()
     {
-        description.SetActive(!description.activeSelf);
+        _description.SetActive(!_description.activeSelf);
     }
-
-    private void AddListeners() { }
 }
