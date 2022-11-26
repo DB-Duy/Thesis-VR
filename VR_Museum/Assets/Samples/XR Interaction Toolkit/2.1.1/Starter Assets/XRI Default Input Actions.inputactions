@@ -278,6 +278,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Menu",
+                    "type": "Button",
+                    "id": "12c7332e-a1c4-48dd-a5ae-1c2d9f9c79d5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -366,6 +375,17 @@
                     "processors": "ScaleVector2(x=0),StickDeadzone",
                     "groups": "Generic XR Controller",
                     "action": "Translate Anchor",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d8b936bb-19e9-48f3-bc8c-ea426af4818e",
+                    "path": "<XRController>{LeftHand}/menu",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Menu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -1358,54 +1378,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Click",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "CustomControls",
-            "id": "f678bc66-7a45-4468-80c6-838da01eb42f",
-            "actions": [
-                {
-                    "name": "CustomLeftHandMovement",
-                    "type": "Value",
-                    "id": "6a237b67-f429-4a0c-91dd-9fe8cb7d2db6",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "CustomLeftHandTurn",
-                    "type": "Value",
-                    "id": "7a26fbb8-2e6a-4f5e-9994-8f36a1d647cc",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "d7984c77-790f-4edd-ab69-e1c452c53458",
-                    "path": "<XRController>{LeftHand}/primary2DAxis",
-                    "interactions": "",
-                    "processors": "ScaleVector2(x=0)",
-                    "groups": "",
-                    "action": "CustomLeftHandMovement",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b8ab4cc3-1083-40e7-a627-86b8a103c717",
-                    "path": "<XRController>{LeftHand}/primary2DAxis",
-                    "interactions": "",
-                    "processors": "ScaleVector2(y=0)",
-                    "groups": "",
-                    "action": "CustomLeftHandTurn",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
