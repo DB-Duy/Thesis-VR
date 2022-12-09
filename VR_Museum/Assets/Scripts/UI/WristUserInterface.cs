@@ -10,7 +10,7 @@ public class WristUserInterface : MonoBehaviour
     [SerializeField]
     private InputActionProperty _menuButton;
 
-    private void Awake()
+    private void Start()
     {
         _menuButton.action.performed += ToggleWristInterface;
     }

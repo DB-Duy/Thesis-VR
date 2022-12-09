@@ -21,6 +21,11 @@ public class SettingsValue : MonoBehaviour
 
     private void Start()
     {
+        UpdateValue();
+    }
+
+    public void UpdateValue()
+    {
         SetValue(_slider.value);
     }
 

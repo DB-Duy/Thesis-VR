@@ -44,6 +44,8 @@ public class ScalableDualGrabTransformer : XRSingleGrabFreeTransformer
         TwoHandedScaleObject(ref localScale);
     }
 
+    private Vector3 _initialScale = Vector3.zero;
+
     private void TwoHandedScaleObject(ref Vector3 localScale)
     {
         if (
@@ -56,6 +58,7 @@ public class ScalableDualGrabTransformer : XRSingleGrabFreeTransformer
             {
                 _isScaling = false;
                 _initialDistance = 0;
+                _initialScale = Vector3.zero;
             }
             return;
         }
@@ -66,6 +69,7 @@ public class ScalableDualGrabTransformer : XRSingleGrabFreeTransformer
         if (_initialDistance == 0)
         {
             _initialDistance = Vector3.Distance(leftHandPosition, rightHandPosition);
+            _initialScale = localScale;
             return;
         }
 
@@ -87,7 +91,8 @@ public class ScalableDualGrabTransformer : XRSingleGrabFreeTransformer
         {
             scaleMultiplier = _minScaleMultiplierThreshold;
         }
-        localScale = _artefact.OriginalTransform.originalScale * scaleMultiplier;
+        // localScale = _artefact.OriginalTransform.originalScale * scaleMultiplier;
+        localScale = _initialScale * scaleMultiplier;
     }
 
     private bool OtherHandActivating()
