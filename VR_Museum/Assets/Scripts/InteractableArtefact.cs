@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Transformers;
 
@@ -30,12 +32,18 @@ public class InteractableArtefact : MonoBehaviour
     [SerializeField]
     private GameObject _description;
 
+    public string DefaultDescription;
+
     [SerializeField]
     private float _rotateSpeed = 1f;
+
+    [SerializeField]
+    private DescriptionCollider[] _descriptionColliders;
 
     private void OnValidate()
     {
         _interactable = GetComponent<XRGrabInteractable>();
+        _descriptionColliders = GetComponentsInChildren<DescriptionCollider>();
     }
 
     private void Start()
@@ -86,5 +94,25 @@ public class InteractableArtefact : MonoBehaviour
     public void ToggleObjectRotation()
     {
         _isRotating = !_isRotating;
+    }
+
+    public void ShowStringDescription(string desc)
+    {
+        TMP_Text t = _description.GetComponentInChildren<TMP_Text>();
+        if (!t)
+        {
+            return;
+        }
+        t.text = desc;
+    }
+
+    public void ShowDefaultDescription()
+    {
+        TMP_Text t = _description.GetComponentInChildren<TMP_Text>();
+        if (!t)
+        {
+            return;
+        }
+        t.text = DefaultDescription;
     }
 }
